@@ -62,19 +62,18 @@ router
   .post(userControllers.createAUser);
 
 router
-  .route("/user/:user_id")
-  .all(jwtMiddleware.verifyToken)
-  .put(userControllers.updateUser)
+  .route("/user/:id_user")
+  .put(jwtMiddleware.verifyToken, userControllers.updateUser)
     /**
  * @swagger
- * /user/{user_id}}:
+ * /user/{id_user}:
  *  put:
   *    tags:
  *      - user
  *    description: ✔️ update user
 *    parameters:
  *      - in: path
- *        name: user_id
+ *        name: id_user
  *        description: ID of the user to update
  *        required: true
  *        type: string
@@ -85,25 +84,28 @@ router
  *          type: object
  *          required:
  *            - email
+ *            - password
  *          properties:
  *            email:
+ *              type: string
+ *            password:
  *              type: string
  *    responses:
  *      '200':
  *        description: A successful response
  */
-  .delete(userControllers.deleteUser);
+  .delete(jwtMiddleware.verifyToken,userControllers.deleteUser);
 
     /**
  * @swagger
- * /user/{user_id}:
+ * /user/{id_user}:
  *  delete:
   *    tags:
  *      - user
  *    description: ✔️ Delete one user
  *    parameters:
  *      - in: path
- *        name: user_id
+ *        name: id_user
  *        description: ID of the user to delete
  *        required: true
  *        type: string

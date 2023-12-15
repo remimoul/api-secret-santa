@@ -50,32 +50,39 @@ exports.createAUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    if (!req.body.email) {
-      return res.status(400).json({ message: "Email is required" });
+    const updates = {};
+//Si l'email est renseigné, on vérifie qu'il est valide
+    if (req.body.email) {
+      const isValidEmail = validator.isEmail(req.body.email);
+      if (!isValidEmail) {
+        return res.status(400).json({ message: "Adresse email invalide" });
+      }
+      //quand est valide on met à jour
+      updates.email = req.body.email;
     }
-
-    // Vérifie que l'email est valide
-    const isValidEmail = validator.isEmail(req.body.email);
-    if (!isValidEmail) {
-      return res.status(400).json({ message: "Invalid email" });
+//Si le mot de passe est renseigné, on le hash et on met à jour
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      updates.password = hashedPassword;
     }
-
-    const user = await User.findByIdAndUpdate(req.params.id_user, req.body, {
+//Si aucun des deux n'est renseigné, on renvoie une erreur
+    if (!req.body.email && !req.body.password) {
+      return res.status(400).json({ message: "Pas de mise a jour trouvée" });
+    }
+//On met à jour l'utilisateur quand email ou mot de passe est renseigné dans la variable updates
+    const user = await User.findByIdAndUpdate(req.params.id_user, updates, {
       new: true,
     });
 
     if (!user) {
-      res.status(404).json({ message: "L'utilisateur n'existe pas" });
+      return res.status(404).json({ message: "L'utilisateur n'existe pas" });
     }else{
-      res.status(200).json({message: `Utilisateur modifié : ${user.email}`});
+     return res.status(200).json({message: `Utilisateur modifié : ${user.email}`});
     }
 
-    res.status(200);
-    res.json(user);
   } catch (error) {
-    res.status(500);
     console.log(error);
-    res.json({ message: "Erreur serveur" });
+    return res.status(500).res.json({ message: "Erreur serveur" });
   }
 };
 

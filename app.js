@@ -31,6 +31,11 @@ server.use(express.json());
 const userRoute = require("./routes/userRoute");
 server.use("/", userRoute);
 
+const groupRoute = require("./routes/groupRoute");
+server.use("/group", groupRoute);
+
+// const memberRoute = require("./routes/memberRoute");
+// server.use("/member", memberRoute);
 
 
 server.listen(port, () => {
