@@ -17,6 +17,10 @@ const GroupSchema = new mongoose.Schema({
   invitedMembers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  }],
+  declineMembers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }]
 });
 

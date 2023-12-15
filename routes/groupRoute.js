@@ -36,12 +36,143 @@ router.
     .post(jwtMiddleware.verifyToken, groupControllers.createGroup);
 
     router.
-    route("/invite")
+    route("/invite/:user_id")
     .post(groupControllers.inviteMember);
+
+  /**
+ * @swagger
+ * /group/invite/{user_id}:
+ *  post:
+  *    tags:
+ *      - group
+ *    description: ✔️ invitation group
+ *    parameters:
+    *      - in: path
+ *        name: user_id
+ *        description: invitation group
+ *        required: true
+ *        type: string
+ *      - in: body
+ *        name: group
+ *        description: invitation group
+ *        schema:
+ *          type: object
+ *          required:
+ *            - email
+ *            - group_id
+ *          properties:
+ *            email:
+ *              type: string
+ *            group_id:
+ *              type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 
     router.
     route("/accept-invite")
     .post(groupControllers.acceptInvite);
 
+      /**
+ * @swagger
+ * /group/accept-invite:
+ *  post:
+  *    tags:
+ *      - group
+ *    description: ✔️ accept invitation group
+ *    parameters:
+    *      - in: path
+ *        name: user_id
+ *        description: accept invitation group
+ *        required: true
+ *        type: string
+ *      - in: body
+ *        name: group
+ *        description: accept invitation group
+ *        schema:
+ *          type: object
+ *          required:
+ *            - user_id
+ *            - group_id
+ *          properties:
+ *            user_id:
+ *              type: string
+ *            group_id:
+ *              type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+
+    router.
+    route("/decline-invite")
+    .post(groupControllers.declineInvite);
+
+      /**
+ * @swagger
+ * /group/decline-invite:
+ *  post:
+  *    tags:
+ *      - group
+ *    description: ✔️ decline invitation group
+ *    parameters:
+    *      - in: path
+ *        name: user_id
+ *        description: decline invitation group
+ *        required: true
+ *        type: string
+ *      - in: body
+ *        name: group
+ *        description: decline invitation group
+ *        schema:
+ *          type: object
+ *          required:
+ *            - user_id
+ *            - group_id
+ *          properties:
+ *            user_id:
+ *              type: string
+ *            group_id:
+ *              type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */      
+
+      router.
+      route("/delete/:user_id")
+      .delete(groupControllers.removeMember);
+  
+    /**
+   * @swagger
+   * /group/delete/{user_id}:
+   *  delete:
+    *    tags:
+   *      - group
+   *    description: ✔️ Admin(creator group) delete member
+   *    parameters:
+      *      - in: path
+   *        name: user_id
+   *        description: id user of creator group
+   *        required: true
+   *        type: string
+   *      - in: body
+   *        name: group
+   *        description: entry id user to delete from group id
+   *        schema:
+   *          type: object
+   *          required:
+   *            - user_id
+   *            - group_id
+   *          properties:
+   *            user_id:
+   *              type: string
+   *            group_id:
+   *              type: string
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
 
 module.exports = router;
