@@ -156,3 +156,45 @@ exports.acceptInvite = async (req, res) => {
       res.status(500).json({ message: "Erreur serveur" });
     }
   };
+
+  exports.assignSecretSantas = async (req, res) => {
+    try {
+        const { group_id } = req.body;
+        const group = await Group.findById(group_id);
+        const user_id = req.params.user_id;
+
+        if (!group) {
+            return res.status(404).json({ error: 'Groupe non trouvé' });
+        }
+
+        
+        if (user_id !== group.creator.toString()) {
+          return res.status(403).json({ error: 'Seul le créateur du groupe peut lancer le secret santa.' });
+        }
+
+        // le tableau des participants ayant accepté l'invitation du secret santa
+        const participants = group.members;
+        let santas = [...participants];
+
+
+        for (let i = santas.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [santas[i], santas[j]] = [santas[j], santas[i]];
+        }
+
+        
+        let assignments = {};
+        for (let i = 0; i < participants.length; i++) {
+            assignments[participants[i]] = santas[(i + 1) % participants.length];
+        }
+
+        // Save the assignments in the group document
+        group.assignments = assignments;
+        await group.save();
+
+        res.json({ message: 'Secret Santas assigned', assignments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+};

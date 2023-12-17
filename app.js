@@ -15,7 +15,7 @@ const swaggerOptions = {
       servers: ["http://localhost:3005"],
     },
   },
-  apis: ["./routes/*.js"],
+  apis: ["./api-docs/swagger.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -33,9 +33,6 @@ server.use("/", userRoute);
 
 const groupRoute = require("./routes/groupRoute");
 server.use("/group", groupRoute);
-
-// const memberRoute = require("./routes/memberRoute");
-// server.use("/member", memberRoute);
 
 
 server.listen(port, () => {

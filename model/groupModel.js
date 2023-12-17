@@ -14,6 +14,7 @@ const GroupSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  assignments: { type: Object, default: {} },
   invitedMembers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
