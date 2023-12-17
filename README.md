@@ -1,6 +1,7 @@
 # API Secret Santa 🎅​
 
 This Node.js API lets you manage Secret Santa groups. Users can create groups, invite members, accept or decline invitations, and the group creator can delete members.
+You can access my API at the following address: [https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/](https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/)
 
 ## Introduction 📄​
 
@@ -23,9 +24,9 @@ Here's an example file `.env` :
 
 `JWT_KEY=your_secret_key`
 
-## ​🔥​ Docs of API routes with Swagger inferface ​🔥​ ​🗂️​ ​​
+## ​🔥​ Try the API (Swagger) ​🔥​ ​🗂️​ ​​
 
-http://localhost:3005/api-docs/
+https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/api-docs/
 
 
 ## ​⚡​ Install ​⚡​
