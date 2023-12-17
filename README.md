@@ -25,7 +25,7 @@ Here's an example file `.env` :
 
 ## ​🔥​ Docs of API routes with Swagger inferface ​🔥​ ​🗂️​ ​​
 
-http://localhost:3005/api-docs/
+https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/api-docs/
 
 
 ## ​⚡​ Install ​⚡​
