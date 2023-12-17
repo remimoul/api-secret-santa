@@ -72,21 +72,16 @@ router.
 
     router.
     route("/accept-invite")
-    .post(groupControllers.acceptInvite);
+    .get(groupControllers.acceptInvite);
 
       /**
  * @swagger
  * /group/accept-invite:
- *  post:
+ *  get:
   *    tags:
  *      - group
  *    description: ✔️ accept invitation group
  *    parameters:
-    *      - in: path
- *        name: user_id
- *        description: accept invitation group
- *        required: true
- *        type: string
  *      - in: body
  *        name: group
  *        description: accept invitation group
@@ -107,21 +102,16 @@ router.
 
     router.
     route("/decline-invite")
-    .post(groupControllers.declineInvite);
+    .get(groupControllers.declineInvite);
 
       /**
  * @swagger
  * /group/decline-invite:
- *  post:
+ *  get:
   *    tags:
  *      - group
  *    description: ✔️ decline invitation group
  *    parameters:
-    *      - in: path
- *        name: user_id
- *        description: decline invitation group
- *        required: true
- *        type: string
  *      - in: body
  *        name: group
  *        description: decline invitation group
