@@ -165,4 +165,36 @@ router.
    *        description: A successful response
    */
 
+    router.
+    route("/assign/:user_id")
+    .post(groupControllers.assignSecretSantas);
+
+  /**
+ * @swagger
+ * /group/assign/{user_id}:
+ *  post:
+  *    tags:
+ *      - group
+ *    description: ✔️ Assign Secret Santa to each member of the group
+ *    parameters:
+    *      - in: path
+ *        name: user_id
+ *        description: id user of creator group
+ *        required: true
+ *        type: string
+ *      - in: body
+ *        name: group
+ *        description: entry group id
+ *        schema:
+ *          type: object
+ *          required:
+ *            - group_id
+ *          properties:
+ *            group_id:
+ *              type: string
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+
 module.exports = router;
