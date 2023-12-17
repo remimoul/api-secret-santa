@@ -1,39 +1,39 @@
 # API Secret Santa 🎅​
 
-Cette API Node.js permet de gérer les groupes de Secret Santa. Les utilisateurs peuvent créer des groupes, inviter des membres, accepter ou refuser des invitations et le créateur du groupe peut supprimer des membres.
+This Node.js API lets you manage Secret Santa groups. Users can create groups, invite members, accept or decline invitations, and the group creator can delete members.
 
 ## Introduction 📄​
 
-L'API Secret Santa a été conçue pour faciliter l'organisation des événements Secret Santa. Elle permet de gérer les groupes, les invitations et les membres.
+The Secret Santa API has been designed to facilitate the organization of Secret Santa events. It allows you to manage groups, invitations and members.
 
-## Ce que vous pouvez faire avec l'API Secret Santa ​🔎​
+## What you can do using the Secret Santa API ​🔎​
 
-Voici quelques exemples d'utilisation de cette API :
+Here are a few examples of how to use this API:
 
-- Créer un nouveau groupe : `POST /group/create/{user_id}`
-- Inviter un membre à un groupe : `POST /group/invite/{user_id}`
-- Accepter une invitation à un groupe : `POST /group/accept-invite`
-- Supprimer un membre d'un groupe : `DELETE /group/delete/{user_id}`
+- Create a new group: `POST /group/create/{user_id}`
+- Invite a member to a group: `POST /group/invite/{user_id}`
+- Accept an invitation to a group: `POST /group/accept-invite`.
+- Delete a group member: `DELETE /group/delete/{user_id}`
 
 ## ​🔐​ Authentification ​🔑​
 
-Ce projet utilise des variables d'environnement pour gérer les paramètres de configuration. Ces variables doivent être définies dans un fichier `.env` à la racine du projet.
+This project uses environment variables to manage configuration parameters. These variables must be defined in a `.env` file at the root of the project.
 
-Voici un exemple de fichier `.env` :
+Here's an example file `.env` :
 
-`JWT_KEY=votre_cle_secrete`
+`JWT_KEY=your_secret_key`
 
-## ​🔥​ Docs des routes de l'API avec l'inferface Swagger ​🔥​ ​🗂️​ ​​
+## ​🔥​ Docs of API routes with Swagger inferface ​🔥​ ​🗂️​ ​​
 
 http://localhost:3005/api-docs/
 
 
-## ​⚡​ Installation ​⚡​
+## ​⚡​ Install ​⚡​
 
-Pour installer et exécuter ce projet localement, suivez les étapes suivantes :
+To install and run this project locally, follow these steps:
 
 ```bash
 git clone https://github.com/remimoul/api-secret-santa.git
-cd secret-santa
+cd api-secret-santa
 npm install
 npm start

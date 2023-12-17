@@ -1,6 +1,9 @@
 const Group = require("../model/groupModel");
 const User = require("../model/userModel");
 const { sendGroupInviteEmail } = require("../controllers/mailController");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const Invitation = require('../model/invitationModel');
 
 exports.createGroup = async (req, res) => {
     try {
@@ -32,6 +35,11 @@ exports.createGroup = async (req, res) => {
 exports.inviteMember = async (req, res) => {
     try{
         const { group_id, email } = req.body;
+        const token = jwt.sign({ group_id, email }, process.env.JWT_KEY, { expiresIn: '48h' });
+        const newInvitation = new Invitation({ email, group_id: group_id, token, expiresAt: Date.now() + 48 * 60 * 60 * 1000 });
+        await newInvitation.save();
+
+
         const group = await Group.findById(group_id);
         const user = await User.findById(req.params.user_id);
         const userToInvite = await User.findOne({ email });
@@ -42,7 +50,7 @@ exports.inviteMember = async (req, res) => {
         if (user._id.toString() === group.creator.toString()) {
             group.invitedMembers.push(userToInvite._id);
             await group.save();
-            sendGroupInviteEmail(email, group.name);
+            sendGroupInviteEmail(email, group.name,group_id,userToInvite._id,token);
             res.json({ message: 'Invitation envoyé' });
           }else {
             return res.status(403).json({ error: 'Seulement le créateur du groupe peut envoyer des invitations.' });
@@ -54,8 +62,16 @@ exports.inviteMember = async (req, res) => {
 }
 
 exports.acceptInvite = async (req, res) => {
+  
     try {
-      const { group_id, user_id } = req.body;
+      // validation du token par lien dans le mail grace req.query
+      const { group_id, user_id, token } = req.query.group_id ? req.query : req.body;
+
+    const invitation = await Invitation.findOne({ token });
+    if (!invitation) {
+        return res.status(400).json({ error: 'Token invalide' });
+    }
+
       const group = await Group.findById(group_id);
       if (!group.invitedMembers.includes(user_id)) {
         return res.status(400).json({ error: 'Utilisateur incorrect' });
@@ -73,6 +89,7 @@ exports.acceptInvite = async (req, res) => {
       }
   
       await group.save();
+      await Invitation.deleteOne({ token });
   
       res.json({ message: 'Invitation accepté' });
     } catch (error) {
@@ -83,8 +100,10 @@ exports.acceptInvite = async (req, res) => {
 
   exports.declineInvite = async (req, res) => {
     try{
-        const { group_id, user_id } = req.body;
+      //Possibilité de faire une validation du token par lien http dans le mail grace req.query et requete sur postman
+        const { group_id, user_id } = req.query.group_id ? req.query : req.body;
         const group = await Group.findById(group_id);
+        const invitation = await Invitation.findOne();
         if (!group.invitedMembers.includes(user_id)) {
           return res.status(400).json({ error: 'Utilisateur incorrect' });
         }
@@ -101,6 +120,7 @@ exports.acceptInvite = async (req, res) => {
       }
     
         await group.save();
+        await invitation.deleteOne({ _id: invitation._id });
     
         res.json({ message: 'Invitation Refuser' });
 
@@ -109,6 +129,7 @@ exports.acceptInvite = async (req, res) => {
         res.status(401).json({ message: "requete invalide" });
     }
   }
+
 
   exports.removeMember = async (req, res) => {
     try {
