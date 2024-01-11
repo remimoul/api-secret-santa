@@ -1,5 +1,11 @@
 # API Secret Santa 🎅​
 
+![Static Badge](https://img.shields.io/badge/beta_version-1.0.0-red)
+![Static Badge](https://img.shields.io/badge/node_js-language-green?logo=nodedotjs)
+![Static Badge](https://img.shields.io/badge/docs_api-swagger-orange?logo=swagger)
+![Static Badge](https://img.shields.io/badge/web_app-online-green?logo=heroku)
+
+
 This Node.js API lets you manage Secret Santa groups. Users can create groups, invite members, accept or decline invitations, and the group creator can delete members.
 You can access my API at the following address: [https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/](https://remi-secret-santa-b71c0fe1ece9.herokuapp.com/)
 
